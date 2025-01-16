@@ -44,8 +44,11 @@ dependencies:
   intl: any
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  flutter_gen_runner: ^5.8.0
   shimmer: ^3.0.0
+  flutter_gen_runner: ^5.8.0
+  injectable_generator: ^2.6.0
+  injectable: ^2.5.0
+  get_it: ^8.0.3
 
 dev_dependencies:
   flutter_test:
@@ -58,7 +61,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
   build_runner: ^2.4.14
-  json_serializable: ^6.9.2
+  json_serializable: ^6.8.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

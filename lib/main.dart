@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/injection.dart';
 import '/core/l10n/l10n.dart';
 import '/gen/assets.gen.dart';
 import 'ui/shared/widgets/common_loading.dart';
@@ -7,6 +8,7 @@ import 'ui/shared/widgets/common_loading.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
+  configureDependencies();
   runApp(const MyApp());
 }
 
