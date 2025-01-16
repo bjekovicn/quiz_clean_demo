@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '/core/l10n/l10n.dart';
 import '/gen/assets.gen.dart';
+import 'ui/shared/widgets/common_loading.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -20,17 +21,27 @@ class MyApp extends StatelessWidget {
       supportedLocales: L10n.supportedLocales,
       localizationsDelegates: L10n.configuration,
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-          fontFamily: Assets.fonts.sourGummyLight),
+        useMaterial3: true,
+        fontFamily: Assets.fonts.sourGummyLight,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
+        ),
+      ),
       home: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            Image.asset(
-              Assets.images.introLogo.path,
-            ),
-          ],
+        body: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                Assets.images.introLogo.path,
+                height: 200,
+                width: 200,
+              ),
+              const SizedBox(height: 30),
+              const CommonLoading(),
+            ],
+          ),
         ),
       ),
     );
