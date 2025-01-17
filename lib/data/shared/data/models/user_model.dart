@@ -1,16 +1,33 @@
+import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_model.g.dart';
 
+@HiveType(typeId: 0)
 @JsonSerializable()
-class UserModel {
+class UserModel extends HiveObject {
+  @HiveField(0)
   final int userId;
+
+  @HiveField(1)
   final String? firstName;
+
+  @HiveField(2)
   final String? lastName;
+
+  @HiveField(3)
   final String? googlePhoto;
+
+  @HiveField(4)
   final int coins;
+
+  @HiveField(5)
   final int tokens;
+
+  @HiveField(6)
   final int gamesWon;
+
+  @HiveField(7)
   final int gamesLost;
 
   UserModel({

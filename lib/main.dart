@@ -7,8 +7,10 @@ import 'ui/shared/widgets/common_loading.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-void main() {
-  configureDependencies();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
+
   runApp(const MyApp());
 }
 
