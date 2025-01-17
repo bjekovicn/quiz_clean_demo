@@ -10,7 +10,7 @@ const _kUsersBoxFriendsKey = 'users_box_friends';
 class FriendshipsStorageServiceImpl implements FriendshipsStorageService {
   final KeyValueStorage<List<UserModel>> _storage;
 
-  FriendshipsStorageServiceImpl(this._storage);
+  FriendshipsStorageServiceImpl(@Named('UsersListStorage') this._storage);
 
   @override
   Future<void> cacheFriends(List<UserModel> friends) async {

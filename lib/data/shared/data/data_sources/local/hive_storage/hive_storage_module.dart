@@ -8,7 +8,7 @@ import '/data/shared/data/data_sources/local/key_value_storage.dart';
 const _kUsersBoxName = 'users_box';
 
 @module
-abstract class HiveUsersBoxModule {
+abstract class HiveStorageModule {
   @preResolve
   Future<Box<List<UserModel>>> get userModelBox {
     Hive.registerAdapter(UserModelAdapter());
@@ -16,6 +16,7 @@ abstract class HiveUsersBoxModule {
   }
 
   @lazySingleton
+  @Named('UsersListStorage')
   KeyValueStorage<List<UserModel>> provideUsersStorage(
     Box<List<UserModel>> box,
   ) {

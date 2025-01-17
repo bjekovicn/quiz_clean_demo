@@ -1,4 +1,5 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 
 import '/core/error_handling/failure.dart';
 import '/data/auth/data/mappers/auth_mappers.dart';
@@ -7,13 +8,15 @@ import '/data/auth/domain/repositories/auth_repository.dart';
 import '/data/auth/data/data_sources/remote/auth_api_service.dart';
 import '/data/auth/data/data_sources/local/auth_storage_service.dart';
 
+@Named("AuthRepository")
+@LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   final AuthApiService _authApiService;
   final AuthStorageService _authStorageService;
 
   AuthRepositoryImpl(
     this._authApiService,
-    this._authStorageService,
+    @Named('StringStorageSecure') this._authStorageService,
   );
 
   @override
