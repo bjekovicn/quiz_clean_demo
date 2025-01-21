@@ -11,7 +11,7 @@ class HiveKeyValueStorage<T> implements KeyValueStorage<T> {
   Future<void> put(String key, T value) async => await _box.put(key, value);
 
   @override
-  T? get(String key) => _box.get(key);
+  Future<T?> get(String key) => Future.value(_box.get(key));
 
   @override
   Future<void> delete(String key) async => await _box.delete(key);
