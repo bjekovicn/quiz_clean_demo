@@ -29,7 +29,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     AppEventLoadLanguageCode event,
     Emitter<AppState> emit,
   ) async {
-    final languageCode = _repository.getSelectedLocale();
+    final languageCode = await _repository.getSelectedLocale();
     final locale = L10n.getLocaleByLanguageCode(
       languageCode ?? L10n.locale.languageCode,
     );

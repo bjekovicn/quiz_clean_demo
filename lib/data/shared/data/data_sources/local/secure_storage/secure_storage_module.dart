@@ -11,9 +11,7 @@ abstract class RegisterModule {
 
   @lazySingleton
   @Named('StringsStorageSecure')
-  KeyValueStorage<String> provideSecureStorage(
-    FlutterSecureStorage storage,
-  ) {
-    return SecureKeyValueStorage<String>(storage);
+  KeyValueStorage<String> provideSecureStorage(FlutterSecureStorage storage) {
+    return SecureKeyValueStorage(storage);
   }
 }

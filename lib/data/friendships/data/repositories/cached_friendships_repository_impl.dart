@@ -22,8 +22,8 @@ class CachedFriendshipsRepositoryImpl implements FriendshipsRepository {
   Future<Either<Failure, List<UserEntity>>> getFriends() async {
     final apiResult = await _friendshipsRepository.getFriends();
     return apiResult.fold(
-      (Failure failure) {
-        final cachedRankings = _storageService.getCachedFriends();
+      (Failure failure) async {
+        final cachedRankings = await _storageService.getCachedFriends();
         if (cachedRankings == null) return Left(failure);
 
         final userEntityList = cachedRankings.map((userModel) {

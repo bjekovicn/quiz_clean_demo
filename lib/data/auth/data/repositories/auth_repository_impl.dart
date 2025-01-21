@@ -37,8 +37,8 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  AuthEntity? getStoredAuthData() {
-    final authModel = _authStorageService.getAuthData();
+  Future<AuthEntity?> getStoredAuthData() async {
+    final authModel = await _authStorageService.getAuthData();
     if (authModel == null) return null;
 
     return authModel.mapToEntity();

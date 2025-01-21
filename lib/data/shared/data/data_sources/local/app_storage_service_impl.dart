@@ -21,7 +21,7 @@ class AppStorageServiceImpl implements AppStorageService {
   }
 
   @override
-  String? getLocale() => _storage.get(_kLocaleKey);
+  Future<String?> getLocale() async => await _storage.get(_kLocaleKey);
 
   @override
   Future<void> clearLocale() async => await _storage.delete(_kLocaleKey);

@@ -1,9 +1,8 @@
 import 'dart:async';
 
-import 'package:injectable/injectable.dart';
-
 import 'auth_event.dart';
 import 'auth_state.dart';
+import 'package:injectable/injectable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '/data/auth/domain/repositories/auth_repository.dart';
@@ -60,7 +59,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(const GetAuthDataLoading());
     await Future.delayed(const Duration(seconds: 2));
-    final authData = _repository.getStoredAuthData();
+    final authData = await _repository.getStoredAuthData();
     emit(GetAuthDataDone(authData));
   }
 }

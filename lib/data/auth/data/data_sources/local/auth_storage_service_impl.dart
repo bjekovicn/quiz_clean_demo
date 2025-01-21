@@ -24,9 +24,9 @@ class AuthStorageServiceImpl implements AuthStorageService {
   }
 
   @override
-  AuthModel? getAuthData() {
-    final accessToken = _storage.get(_kAccessTokenKey);
-    final refreshToken = _storage.get(_kRefreshTokenKey);
+  Future<AuthModel?> getAuthData() async {
+    final accessToken = await _storage.get(_kAccessTokenKey);
+    final refreshToken = await _storage.get(_kRefreshTokenKey);
     if (accessToken == null || refreshToken == null) return null;
 
     return AuthModel(

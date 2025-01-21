@@ -1,5 +1,5 @@
 abstract class AppRepository {
-  String? getSelectedLocale();
+  Future<String?> getSelectedLocale();
   Future<void> saveSelectedLocale(String locale);
   Future<void> clearSelectedLocale();
 }

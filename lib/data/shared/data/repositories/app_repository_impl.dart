@@ -16,8 +16,8 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  String? getSelectedLocale() {
-    return _appStorageService.getLocale();
+  Future<String?> getSelectedLocale() async {
+    return await _appStorageService.getLocale();
   }
 
   @override

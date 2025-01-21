@@ -18,7 +18,7 @@ class RankingsStorageServiceImpl implements RankingsStorageService {
   }
 
   @override
-  List<UserModel>? getCachedRankings() {
+  Future<List<UserModel>?> getCachedRankings() {
     return _storage.get(_kUsersBoxRankingsKey);
   }
 }
