@@ -31,9 +31,7 @@ class _LandingScreenState extends State<LandingScreen> {
       child: BlocBuilder<AuthBloc, AuthState>(
         buildWhen: (_, current) => current is! ScreenChanged,
         builder: (_, state) {
-          if (state is GetAuthDataDone && state.authEntity == null) {
-            return const InitialSetUpScreen();
-          }
+          if (state is Unauthorized) return const InitialSetUpScreen();
 
           return const LandingContent();
         },
@@ -42,13 +40,11 @@ class _LandingScreenState extends State<LandingScreen> {
   }
 
   void _listener(BuildContext context, AuthState state) {
-    // Exit early if the user is not authenticated (user is null)
-    if (state.authEntity == null) return;
-
     // Navigate to the main application page (NavigationPage)
-    // This occurs only when the user is authenticated for the first time
-    // or when the user is already signed in and stored in local storage
-    if (state is! GetAuthDataDone && state is! GoogleSignInDone) return;
+    // This occurs only in two cases:
+    // When the user is authenticated for the first time
+    // When the user is already signed in and stored in local storage
+    if (state is! Authorized && state is! GoogleSignInDone) return;
 
     //NAVIGATION TO HOME
   }

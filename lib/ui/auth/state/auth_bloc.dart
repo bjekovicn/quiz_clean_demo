@@ -58,8 +58,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(const GetAuthDataLoading());
+
+    //For better UI/UX, we simulate a delay of 2 seconds
     await Future.delayed(const Duration(seconds: 2));
+
     final authData = await _repository.getStoredAuthData();
-    emit(GetAuthDataDone(authData));
+    emit(authData != null ? Authorized(authData) : Unauthorized());
   }
 }

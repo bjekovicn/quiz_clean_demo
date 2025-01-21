@@ -44,8 +44,12 @@ class ScreenChanged extends AuthState {
       : super(screenState: screenState);
 }
 
-class GetAuthDataDone extends AuthState {
-  const GetAuthDataDone(AuthEntity? authEntity) : super(authEntity: authEntity);
+class Authorized extends AuthState {
+  const Authorized(AuthEntity authEntity) : super(authEntity: authEntity);
+}
+
+class Unauthorized extends AuthState {
+  const Unauthorized() : super(authEntity: null);
 }
 
 class GetAuthDataLoading extends AuthState {

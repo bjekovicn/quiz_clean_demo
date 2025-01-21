@@ -4,7 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '/injection.dart';
 import '/core/l10n/l10n.dart';
-import '/gen/assets.gen.dart';
+import '/core/themes/main_theme.dart';
 import '/ui/auth/state/auth_bloc.dart';
 import '/ui/shared/state/app_bloc.dart';
 import '/ui/shared/state/app_event.dart';
@@ -36,16 +36,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      theme: appTheme,
       navigatorKey: navigatorKey,
       supportedLocales: L10n.supportedLocales,
       localizationsDelegates: L10n.configuration,
-      theme: ThemeData(
-        useMaterial3: true,
-        fontFamily: Assets.fonts.sourGummyLight,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-        ),
-      ),
+      locale: context.watch<AppBloc>().state.locale,
       home: BlocProvider(
         create: (_) => getIt<AuthBloc>(),
         child: const LandingScreen(),
