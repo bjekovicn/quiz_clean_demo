@@ -8,7 +8,6 @@ import '/data/auth/domain/repositories/auth_repository.dart';
 import '/data/auth/data/data_sources/remote/auth_api_service.dart';
 import '/data/auth/data/data_sources/local/auth_storage_service.dart';
 
-@Named("AuthRepository")
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   final AuthApiService _authApiService;
@@ -16,7 +15,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   AuthRepositoryImpl(
     this._authApiService,
-    @Named('StringStorageSecure') this._authStorageService,
+    this._authStorageService,
   );
 
   @override

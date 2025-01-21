@@ -1,11 +1,14 @@
 import 'dart:async';
 
+import 'package:injectable/injectable.dart';
+
 import 'auth_event.dart';
 import 'auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '/data/auth/domain/repositories/auth_repository.dart';
 
+@injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository _repository;
 

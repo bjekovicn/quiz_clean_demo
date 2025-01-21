@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       supportedLocales: L10n.supportedLocales,
       localizationsDelegates: L10n.configuration,
-      locale: context.watch<AppBloc>().state.locale,
       theme: ThemeData(
         useMaterial3: true,
         fontFamily: Assets.fonts.sourGummyLight,
