@@ -1,5 +1,7 @@
 import 'auth_state.dart';
 
+import '/data/auth/domain/entities/auth_entity.dart';
+
 abstract class AuthEvent {
   const AuthEvent();
 }
@@ -7,6 +9,11 @@ abstract class AuthEvent {
 class RegisterUserEvent extends AuthEvent {
   final String idToken;
   const RegisterUserEvent(this.idToken);
+}
+
+class UserRegisteredEvent extends AuthEvent {
+  final AuthEntity authEntity;
+  const UserRegisteredEvent(this.authEntity);
 }
 
 class NextScreenEvent extends AuthEvent {

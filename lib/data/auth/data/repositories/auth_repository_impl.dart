@@ -32,20 +32,34 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> clearStoredAuthData() async {
-    await _authStorageService.clearAuthData();
+  Future<Either<Failure, void>> clearStoredAuthData() async {
+    try {
+      await _authStorageService.clearAuthData();
+      return Right(null);
+    } catch (exception) {
+      return Left(Failure.handle(exception));
+    }
   }
 
   @override
-  Future<AuthEntity?> getStoredAuthData() async {
-    final authModel = await _authStorageService.getAuthData();
-    if (authModel == null) return null;
+  Future<Either<Failure, AuthEntity?>> getStoredAuthData() async {
+    try {
+      final authModel = await _authStorageService.getAuthData();
+      if (authModel == null) return Right(null);
 
-    return authModel.mapToEntity();
+      return Right(authModel.mapToEntity());
+    } catch (exception) {
+      return Left(Failure.handle(exception));
+    }
   }
 
   @override
-  Future<void> storeAuthData(AuthEntity value) async {
-    await _authStorageService.saveAuthData(value.mapToModel());
+  Future<Either<Failure, void>> storeAuthData(AuthEntity value) async {
+    try {
+      await _authStorageService.saveAuthData(value.mapToModel());
+      return Right(null);
+    } catch (exception) {
+      return Left(Failure.handle(exception));
+    }
   }
 }

@@ -5,6 +5,8 @@ import 'initial_set_up_screen.dart';
 import '/ui/auth/state/auth_bloc.dart';
 import '/ui/auth/state/auth_event.dart';
 import '/ui/auth/state/auth_state.dart';
+import '/core/extensions/extensions.dart';
+import '/ui/home/screens/home_screen.dart';
 import '/ui/auth/widgets/landing_content.dart';
 
 class LandingScreen extends StatefulWidget {
@@ -46,6 +48,10 @@ class _LandingScreenState extends State<LandingScreen> {
     // When the user is already signed in and stored in local storage
     if (state is! Authorized && state is! GoogleSignInDone) return;
 
-    //NAVIGATION TO HOME
+    context.nav.pushReplacement(
+      MaterialPageRoute(
+        builder: (_) => HomeScreen(),
+      ),
+    );
   }
 }

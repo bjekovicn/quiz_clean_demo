@@ -15,9 +15,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this._repository,
   ) : super(const RemoteAuthIdle()) {
     on<RegisterUserEvent>(_onRegisterUser);
+    on<UserRegisteredEvent>(_onUserRegistered);
     on<NextScreenEvent>(_onNextScreen);
     on<PreviousScreenEvent>(_onPreviousScreen);
     on<GetSignedInUserEvent>(_onGetSignedInUser);
+  }
+
+  Future<void> _onUserRegistered(
+    UserRegisteredEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    await _repository.storeAuthData(event.authEntity);
+    emit(GoogleSignInDone(event.authEntity));
   }
 
   Future<void> _onRegisterUser(
@@ -27,13 +36,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(const GoogleSignInLoading());
 
     final response = await _repository.authGoogle(event.idToken);
-
     response.fold(
       (failure) => emit(RemoteAuthError(failure)),
-      (authEntity) async {
-        await _repository.storeAuthData(authEntity);
-        emit(GoogleSignInDone(authEntity));
-      },
+      (authEntity) => add(UserRegisteredEvent(authEntity)),
     );
   }
 
@@ -63,6 +68,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     await Future.delayed(const Duration(seconds: 2));
 
     final authData = await _repository.getStoredAuthData();
-    emit(authData != null ? Authorized(authData) : Unauthorized());
+
+    authData.fold(
+      (failure) => emit(Unauthorized()),
+      (authEntity) {
+        if (authEntity == null) return emit(Unauthorized());
+        emit(Authorized(authEntity));
+      },
+    );
   }
 }

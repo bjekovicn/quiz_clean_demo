@@ -34,7 +34,7 @@ class SocialLogInSection extends StatelessWidget {
     );
   }
 
-  void _logInWithGoogle(BuildContext context) async {
+  Future<void> _logInWithGoogle(BuildContext context) async {
     final messenger = ScaffoldMessenger.of(context);
     final authBloc = BlocProvider.of<AuthBloc>(context);
     final commonError = context.l.error_occurred;

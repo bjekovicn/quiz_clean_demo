@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '/injection.dart';
 import '/core/l10n/l10n.dart';
@@ -13,8 +12,6 @@ import '/ui/auth/screens/landing_screen.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
-  await dotenv.load();
-
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
 
