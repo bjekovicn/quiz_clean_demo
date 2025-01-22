@@ -16,7 +16,7 @@ class RankingsBloc extends Bloc<RankingsEvent, RankingsState> {
   }
 
   Future<void> _onGetAllTimeRankedUsers(
-    GetAllTimeRankedUsersEvent event,
+    RankingsEvent event,
     Emitter<RankingsState> emit,
   ) async {
     emit(const RankingsStateLoading());
