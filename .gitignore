@@ -11,6 +11,7 @@
 *.g.dart
 *.freezed.dart
 *.env
+*.gen.dart
 migrate_working_dir/
 settings.json
 google-services.json

@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '/injection.dart';
 import '/ui/home/screens/home_screen.dart';
+import '/ui/rankings/state/rankings_bloc.dart';
 import '/ui/friends/screens/friends_screen.dart';
 import '/ui/rankings/screens/rankings_screen.dart';
 import '/ui/navigation/state/main_navigation_events.dart';
@@ -8,7 +10,7 @@ import '/ui/navigation/state/main_navigation_states.dart';
 
 class MainNavigationBloc
     extends Bloc<MainNavigationEvent, MainNavigationState> {
-  static const _screens = [
+  static final _screens = [
     //HOME SCREEN
     HomeScreen(),
 
@@ -16,7 +18,10 @@ class MainNavigationBloc
     FriendsScreen(),
 
     //RANKINGS SCREEN
-    RankingsScreen(),
+    BlocProvider(
+      create: (_) => getIt<RankingsBloc>(),
+      child: RankingsScreen(),
+    ),
   ];
 
   //
