@@ -2,29 +2,21 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '/data/shared/data/data_sources/local/key_value_storage.dart';
 
-class SecureKeyValueStorage<T> implements KeyValueStorage<T> {
-  final FlutterSecureStorage _secureStorage;
+class SecureKeyValueStorage implements KeyValueStorage<String> {
+  final FlutterSecureStorage _storage;
 
-  SecureKeyValueStorage(this._secureStorage);
-
-  @override
-  Future<void> put(String key, T value) async {
-    await _secureStorage.write(key: key, value: value.toString());
-  }
+  SecureKeyValueStorage(this._storage);
 
   @override
-  T? get(String key) {
-    final value = _secureStorage.read(key: key);
-    return value as T?;
-  }
+  Future<void> put(String key, String value) async =>
+      await _storage.write(key: key, value: value);
 
   @override
-  Future<void> delete(String key) async {
-    await _secureStorage.delete(key: key);
-  }
+  Future<String?> get(String key) async => await _storage.read(key: key);
 
   @override
-  Future<void> clear() async {
-    await _secureStorage.deleteAll();
-  }
+  Future<void> delete(String key) async => await _storage.delete(key: key);
+
+  @override
+  Future<void> clear() async => await _storage.deleteAll();
 }

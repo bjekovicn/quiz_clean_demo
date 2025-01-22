@@ -18,7 +18,7 @@ class FriendshipsStorageServiceImpl implements FriendshipsStorageService {
   }
 
   @override
-  List<UserModel>? getCachedFriends() {
-    return _storage.get(_kUsersBoxFriendsKey);
+  Future<List<UserModel>?> getCachedFriends() async {
+    return await _storage.get(_kUsersBoxFriendsKey);
   }
 }

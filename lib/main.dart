@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '/injection.dart';
 import '/core/l10n/l10n.dart';
-import '/gen/assets.gen.dart';
-import 'ui/shared/widgets/common_loading.dart';
+import '/core/themes/main_theme.dart';
+import '/ui/auth/state/auth_bloc.dart';
+import '/ui/shared/state/app_bloc.dart';
+import '/ui/shared/state/app_event.dart';
+import '/ui/auth/screens/landing_screen.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -11,7 +15,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
 
-  runApp(const MyApp());
+  runApp(
+    BlocProvider(
+      create: (_) => getIt<AppBloc>()
+        ..add(
+          AppEventLoadLanguageCode(),
+        ),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -21,32 +33,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      theme: appTheme,
       navigatorKey: navigatorKey,
       supportedLocales: L10n.supportedLocales,
       localizationsDelegates: L10n.configuration,
-      theme: ThemeData(
-        useMaterial3: true,
-        fontFamily: Assets.fonts.sourGummyLight,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-        ),
-      ),
-      home: Scaffold(
-        body: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                Assets.images.introLogo.path,
-                height: 200,
-                width: 200,
-              ),
-              const SizedBox(height: 30),
-              const CommonLoading(),
-            ],
-          ),
-        ),
+      locale: context.watch<AppBloc>().state.locale,
+      home: BlocProvider(
+        create: (_) => getIt<AuthBloc>(),
+        child: const LandingScreen(),
       ),
     );
   }

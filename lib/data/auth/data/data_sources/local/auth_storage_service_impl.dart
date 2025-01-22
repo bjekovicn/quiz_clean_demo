@@ -12,7 +12,7 @@ class AuthStorageServiceImpl implements AuthStorageService {
   final KeyValueStorage<String> _storage;
 
   AuthStorageServiceImpl(
-    @Named('StringStorageSecure') this._storage,
+    @Named('StringsStorageSecure') this._storage,
   );
 
   @override
@@ -24,9 +24,9 @@ class AuthStorageServiceImpl implements AuthStorageService {
   }
 
   @override
-  AuthModel? getAuthData() {
-    final accessToken = _storage.get(_kAccessTokenKey);
-    final refreshToken = _storage.get(_kRefreshTokenKey);
+  Future<AuthModel?> getAuthData() async {
+    final accessToken = await _storage.get(_kAccessTokenKey);
+    final refreshToken = await _storage.get(_kRefreshTokenKey);
     if (accessToken == null || refreshToken == null) return null;
 
     return AuthModel(
@@ -37,7 +37,9 @@ class AuthStorageServiceImpl implements AuthStorageService {
 
   @override
   Future<void> saveAuthData(AuthModel value) async {
-    await _storage.put(_kAccessTokenKey, value.accessToken);
-    await _storage.put(_kRefreshTokenKey, value.refreshToken);
+    await Future.wait([
+      _storage.put(_kAccessTokenKey, value.accessToken),
+      _storage.put(_kRefreshTokenKey, value.refreshToken),
+    ]);
   }
 }

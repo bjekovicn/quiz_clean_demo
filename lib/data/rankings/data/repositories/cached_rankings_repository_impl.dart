@@ -22,8 +22,8 @@ class CachedRankingsRepositoryImpl implements RankingsRepository {
   Future<Either<Failure, List<UserEntity>>> getAllTimeRankedUsers() async {
     final apiResult = await _rankingsRepository.getAllTimeRankedUsers();
     return apiResult.fold(
-      (Failure failure) {
-        final cachedRankings = _storageService.getCachedRankings();
+      (Failure failure) async {
+        final cachedRankings = await _storageService.getCachedRankings();
         if (cachedRankings == null) return Left(failure);
 
         final userEntityList = cachedRankings.map((userModel) {
@@ -45,8 +45,8 @@ class CachedRankingsRepositoryImpl implements RankingsRepository {
   Future<Either<Failure, List<UserEntity>>> getMonthlyRankedUsers() async {
     final apiResult = await _rankingsRepository.getMonthlyRankedUsers();
     return apiResult.fold(
-      (Failure failure) {
-        final cachedRankings = _storageService.getCachedRankings();
+      (Failure failure) async {
+        final cachedRankings = await _storageService.getCachedRankings();
         if (cachedRankings == null) return Left(failure);
 
         final userEntityList = cachedRankings.map((userModel) {
@@ -68,8 +68,8 @@ class CachedRankingsRepositoryImpl implements RankingsRepository {
   Future<Either<Failure, List<UserEntity>>> getWeeklyRankedUsers() async {
     final apiResult = await _rankingsRepository.getWeeklyRankedUsers();
     return apiResult.fold(
-      (Failure failure) {
-        final cachedRankings = _storageService.getCachedRankings();
+      (Failure failure) async {
+        final cachedRankings = await _storageService.getCachedRankings();
         if (cachedRankings == null) return Left(failure);
 
         final userEntityList = cachedRankings.map((userModel) {
