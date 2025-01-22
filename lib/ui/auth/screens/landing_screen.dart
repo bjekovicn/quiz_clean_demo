@@ -6,8 +6,9 @@ import '/ui/auth/state/auth_bloc.dart';
 import '/ui/auth/state/auth_event.dart';
 import '/ui/auth/state/auth_state.dart';
 import '/core/extensions/extensions.dart';
-import '/ui/home/screens/home_screen.dart';
 import '/ui/auth/widgets/landing_content.dart';
+import '/ui/navigation/state/main_navigation_bloc.dart';
+import '/ui/navigation/screens/main_navigation_screen.dart';
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({super.key});
@@ -50,7 +51,10 @@ class _LandingScreenState extends State<LandingScreen> {
 
     context.nav.pushReplacement(
       MaterialPageRoute(
-        builder: (_) => HomeScreen(),
+        builder: (_) => BlocProvider(
+          create: (_) => MainNavigationBloc(),
+          child: MainNavigationScreen(),
+        ),
       ),
     );
   }
