@@ -14,20 +14,23 @@ class CommonError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            failure?.message ?? context.l.error_occurred,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 12),
-          if (failure != null)
-            CommonErrorIcon(failureCode: failure!.code)
-          else
-            const Icon(Icons.info, size: 40),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              failure?.message ?? context.l.error_occurred,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 12),
+            if (failure != null)
+              CommonErrorIcon(failureCode: failure!.code)
+            else
+              const Icon(Icons.info, size: 40),
+          ],
+        ),
       ),
     );
   }
