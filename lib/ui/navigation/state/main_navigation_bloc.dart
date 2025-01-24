@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '/injection.dart';
 import '/ui/home/screens/home_screen.dart';
+import '/ui/friends/state/friends_bloc.dart';
 import '/ui/rankings/state/rankings_bloc.dart';
 import '/ui/friends/screens/friends_screen.dart';
 import '/ui/rankings/screens/rankings_screen.dart';
@@ -15,7 +16,10 @@ class MainNavigationBloc
     HomeScreen(),
 
     //FRIENDS SCREEN
-    FriendsScreen(),
+    BlocProvider(
+      create: (_) => getIt<FriendsBloc>(),
+      child: FriendsScreen(),
+    ),
 
     //RANKINGS SCREEN
     BlocProvider(
