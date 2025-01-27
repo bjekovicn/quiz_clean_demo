@@ -5,6 +5,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import '/data/shared/data/models/user_model.dart';
+
 import 'injection.config.dart';
 
 final getIt = GetIt.instance;
@@ -18,6 +20,9 @@ Future<void> configureDependencies() async {
   await dotenv.load();
   await Hive.initFlutter();
   await getIt.init();
+
+  Hive.registerAdapter(UserModelAdapter());
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

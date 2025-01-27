@@ -27,6 +27,7 @@ abstract class DioNetworkModule {
     );
 
     dio.interceptors.add(LogInterceptor(responseBody: true));
+    dio.interceptors.add(DioHttpInterceptors());
     return dio;
   }
 }
