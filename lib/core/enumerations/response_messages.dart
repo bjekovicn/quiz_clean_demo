@@ -1,0 +1,17 @@
+enum ResponseMessage {
+  success,
+  noContent,
+  badRequest,
+  unauthorized,
+  forbidden,
+  internalServerError,
+  notFound,
+  connectTimeout,
+  cancel,
+  receiveTimeout,
+  sendTimeout,
+  cacheError,
+  noInternetConnection,
+  defaultError,
+  connectionError,
+}
