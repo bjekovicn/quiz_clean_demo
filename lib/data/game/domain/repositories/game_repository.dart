@@ -18,4 +18,13 @@ abstract class GameRepository {
     required String userId,
     required Function(GameStartEntity) onGameStart,
   });
+
+  Future<Either<Failure, void>> unsubscribeFromChannel({
+    required String channelId,
+  });
+
+  Future<Either<Failure, void>> publishToChannel({
+    required String channelId,
+    required String message,
+  });
 }

@@ -1,10 +1,12 @@
 import 'dart:developer';
 
+import 'package:injectable/injectable.dart';
 import 'package:redis/redis.dart';
 
 import '/core/di/app_config_module.dart';
 import '/data/game/data/data_sources/remote/pub_sub_service.dart';
 
+@LazySingleton(as: PubSubService)
 class PubSubServiceImpl implements PubSubService {
   final AppConfig _appConfig;
 

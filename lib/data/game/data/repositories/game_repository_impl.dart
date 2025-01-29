@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 
 import '/core/error_handling/failure.dart';
+import '/data/game/domain/init_game_entity.dart';
 import '/data/game/data/models/game_end_model.dart';
 import '/data/game/data/models/round_end_model.dart';
 import '/data/game/data/mappers/game_end_mapper.dart';
@@ -19,15 +21,14 @@ import '/data/game/domain/entities/game/game_start_entity.dart';
 import '/data/game/domain/entities/game/round_start_entity.dart';
 import '/data/game/data/data_sources/remote/pub_sub_service.dart';
 
+@Injectable(as: GameRepository)
 class GameRepositoryImpl implements GameRepository {
-  final int userId;
-  final String languageCode;
+  final InitGameEntity _data;
   final PubSubService _pubSubService;
 
   GameRepositoryImpl(
+    @factoryParam this._data,
     this._pubSubService,
-    this.languageCode,
-    this.userId,
   );
 
   @override
@@ -61,7 +62,7 @@ class GameRepositoryImpl implements GameRepository {
               final gameEndModel = GameEndModel.fromJson(rawData);
               onGameEnd(gameEndModel.mapToEntity());
 
-              _pubSubService.unsubscribeFromChannel(channelId: '$userId');
+              _pubSubService.unsubscribeFromChannel(channelId: _data.userId);
               _pubSubService.unsubscribeFromChannel(channelId: gameEndModel.id);
               break;
 
@@ -86,7 +87,7 @@ class GameRepositoryImpl implements GameRepository {
         channelId: userId,
         onMessage: (message) {
           if (message[0] != 'message') return 'Incorrect Message Type';
-
+          log('MSG: $message');
           final value = jsonDecode(message[2]) as Map<String, dynamic>;
           final type = value["t"] as String;
           final rawData = value["d"];
@@ -101,6 +102,36 @@ class GameRepositoryImpl implements GameRepository {
               log('Unknown QUEUE Channel Message: $value]}');
           }
         },
+      );
+      return const Right(null);
+    } catch (exception) {
+      return Left(Failure.handle(exception));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> publishToChannel({
+    required String channelId,
+    required String message,
+  }) async {
+    try {
+      await _pubSubService.publishToChannel(
+        channelId: channelId,
+        message: message,
+      );
+      return const Right(null);
+    } catch (exception) {
+      return Left(Failure.handle(exception));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> unsubscribeFromChannel({
+    required String channelId,
+  }) async {
+    try {
+      await _pubSubService.unsubscribeFromChannel(
+        channelId: channelId,
       );
       return const Right(null);
     } catch (exception) {
