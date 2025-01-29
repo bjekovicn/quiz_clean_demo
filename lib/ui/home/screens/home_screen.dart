@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+import '/injection.dart';
 import '/gen/assets.gen.dart';
+import '/ui/home/state/home_bloc.dart';
+import '/ui/shared/state/app_bloc.dart';
 import '/core/extensions/extensions.dart';
+import '/ui/game_play/bloc/game_bloc.dart';
+import '/ui/game_play/bloc/game_events.dart';
+import '/ui/game_play/screens/game_screen.dart';
 import '/ui/home/widgets/start_game_button.dart';
 import '/ui/home/widgets/user_info_section.dart';
+import '/data/game/domain/init_game_entity.dart';
+import '/data/game/domain/repositories/game_repository.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -63,14 +72,37 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _toRandomDuel(BuildContext context) {
-    //
+    final homeBloc = context.read<HomeBloc>();
+    final userId = homeBloc.state.user?.userId;
+
+    final appBloc = context.read<AppBloc>();
+    final languageCode = appBloc.state.locale.languageCode;
+
+    if (userId == null) return;
+
+    final initGameEntity = InitGameEntity(
+      userId: '$userId',
+      languageCode: languageCode,
+    );
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => BlocProvider(
+          create: (_) => getIt<GameBloc>(
+            param1: initGameEntity,
+            param2: getIt<GameRepository>(
+              param1: initGameEntity,
+            ),
+          )..add(JoinToMatchMakingQueueEvent()),
+          child: const GameScreen(),
+        ),
+      ),
+    );
   }
 
   void _toFriendsBattle(BuildContext context) {
     //
   }
 
-  void _onNotificationMessageStartup(RemoteMessage? message) {
-    //
-  }
+  void _onNotificationMessageStartup(RemoteMessage? message) {}
 }

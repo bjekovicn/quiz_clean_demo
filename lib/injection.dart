@@ -19,9 +19,8 @@ final getIt = GetIt.instance;
 Future<void> configureDependencies() async {
   await dotenv.load();
   await Hive.initFlutter();
-  await getIt.init();
-
   Hive.registerAdapter(UserModelAdapter());
+  await getIt.init();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
